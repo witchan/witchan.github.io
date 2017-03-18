@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mac下对ShadowsocksX进行Hook,实现自动更新账号 | iOS开发 - WitChan的技术博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="WitChan,ios博客,iOS开发,ios技术" />
+  
+
+  <meta name="description" content="使用ShadowsocksX的人群有两种，第一种自己购买的账号，第二种就是在网上找临时的账号，但临时账号，过几小时，密码都会改变，又得重新找开网站，重新设置。今天就针对这种情况对ShadowsocksX进行Hook，达到启动APP后，自动更新账号密码的目的。编写工具为[EasySIMBL]。(https://github.com/poboke/EasySIMBL-Bundle-Template)一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac下对ShadowsocksX进行Hook,实现自动更新账号">
+<meta property="og:url" content="http://blog.witchan.com/2017/03/17/Hook-shadowsocketsx-in-mac/index.html">
+<meta property="og:site_name" content="iOS开发 - WitChan的技术博客">
+<meta property="og:description" content="使用ShadowsocksX的人群有两种，第一种自己购买的账号，第二种就是在网上找临时的账号，但临时账号，过几小时，密码都会改变，又得重新找开网站，重新设置。今天就针对这种情况对ShadowsocksX进行Hook，达到启动APP后，自动更新账号密码的目的。编写工具为[EasySIMBL]。(https://github.com/poboke/EasySIMBL-Bundle-Template)一">
+<meta property="og:updated_time" content="2017-03-18T02:28:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac下对ShadowsocksX进行Hook,实现自动更新账号">
+<meta name="twitter:description" content="使用ShadowsocksX的人群有两种，第一种自己购买的账号，第二种就是在网上找临时的账号，但临时账号，过几小时，密码都会改变，又得重新找开网站，重新设置。今天就针对这种情况对ShadowsocksX进行Hook，达到启动APP后，自动更新账号密码的目的。编写工具为[EasySIMBL]。(https://github.com/poboke/EasySIMBL-Bundle-Template)一">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?d94f3dfe4e8798a0d3dfb935f6bbc4ff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一-识别二维码"><span class="toc-text">一. 识别二维码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二-解码字符串"><span class="toc-text">二. 解码字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三-保存账号信息"><span class="toc-text">三. 保存账号信息</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Hook-shadowsocketsx-in-mac" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Mac下对ShadowsocksX进行Hook,实现自动更新账号</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>WitChan</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+
+      
+        <i class="icon-comment"></i> 
+        <span class="ds-thread-count" data-thread-key="post-Hook-shadowsocketsx-in-mac"><i class="fa fa-spinner fa-spin"></i></span> 条评论
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>使用ShadowsocksX的人群有两种，第一种自己购买的账号，第二种就是在网上找临时的账号，但临时账号，过几小时，密码都会改变，又得重新找开网站，重新设置。今天就针对这种情况对ShadowsocksX进行Hook，达到启动APP后，自动更新账号密码的目的。<br>编写工具为[EasySIMBL]。(<a href="https://github.com/poboke/EasySIMBL-Bundle-Template" target="_blank" rel="external">https://github.com/poboke/EasySIMBL-Bundle-Template</a>)<br>一. <strong>识别二维码</strong></p>
+<p>二. <strong>解码字符串</strong></p>
+<p>三. <strong>保存账号信息</strong></p>
+<a id="more"></a>
+<hr>
+<h1 id="一-识别二维码"><a href="#一-识别二维码" class="headerlink" title="一. 识别二维码"></a>一. 识别二维码</h1><p>class_dump导出头文件后，你会发现里面有Zxing二维码扫描框架，那我们就直接使用Zxing来进行二维码识别，代码如下:</p>
+<pre><code>+ (NSString *)scanQRCodeWithImage:(NSImage *)image {
+    if (image == nil) {
+        return nil;
+    }
+
+    CGImageRef imageToDecode = [VPNHelper nsImageToCGImageRef:image];
+    ZXLuminanceSource *source = [[objc_getClass(&quot;ZXCGImageLuminanceSource&quot;) alloc] initWithCGImage:imageToDecode];
+    ZXBinaryBitmap *bitmap = [objc_getClass(&quot;ZXBinaryBitmap&quot;) binaryBitmapWithBinarizer:[objc_getClass(&quot;ZXHybridBinarizer&quot;) binarizerWithSource:source]];
+
+    ZXDecodeHints *hints = [objc_getClass(&quot;ZXDecodeHints&quot;) hints];
+
+    ZXMultiFormatReader *reader = [objc_getClass(&quot;ZXMultiFormatReader&quot;) reader];
+    ZXResult *result = [reader decode:bitmap
+                                hints:hints
+                                error:nil];
+    if (result) {
+        return result.text;
+    } else {
+        return nil;
+    }
+}
+</code></pre><p>扫描得到的信息为’ss://cmM0LW1kNToyMDQ2NzIzMkAxMzguNjguNjEuNDI6MjM0NTY=’</p>
+<h1 id="二-解码字符串"><a href="#二-解码字符串" class="headerlink" title="二. 解码字符串"></a>二. 解码字符串</h1><p>由于ShadowsocksX可以生成二维码，那就去查找在哪生成的二维码。在所有.h文件中，搜索qrcode后，在SWBAppDelegate.h文件中找到                     showQRCode方法，代码如下:</p>
+<pre><code>void -[SWBAppDelegate showQRCode](void * self, void * _cmd) {
+    r12 = self;
+    rax = [ShadowsocksRunner generateSSURL]; // 生成二维码URL
+    rax = [rax retain];
+    if (rax != 0x0) {
+            var_30 = rax;
+            rax = [SWBQRCodeWindowController alloc];
+            rax = [rax initWithWindowNibName:@&quot;QRCodeWindow&quot;];
+            rdi = r12-&gt;qrCodeWindowController;
+            r12-&gt;qrCodeWindowController = rax;
+            [rdi release];
+            var_38 = r12-&gt;qrCodeWindowController;
+            rbx = [[var_30 absoluteString] retain];
+            [var_38 setQrCode:rbx];
+            [rbx release];
+            [r12-&gt;qrCodeWindowController showWindow:r12];
+            [*_NSApp activateIgnoringOtherApps:0x1];
+            rbx = [[r12-&gt;qrCodeWindowController window] retain];
+            [rbx makeKeyAndOrderFront:0x0];
+            [rbx release];
+            rax = var_30;
+    }
+    [rax release];
+    return;
+}
+</code></pre><p> 不难发现，[ShadowsocksRunner generateSSURL]生成二维码字符串，那我们继续</p>
+<pre><code>void * +[ShadowsocksRunner generateSSURL](void * self, void * _cmd) {
+    rax = [ShadowsocksRunner isUsingPublicServer];
+    rbx = 0x0;
+    if (rax == 0x0) {
+            r15 = [[ShadowsocksRunner configForKey:@&quot;proxy encryption&quot;] retain];
+            var_38 = r15;
+            r13 = [[ShadowsocksRunner configForKey:@&quot;proxy password&quot;] retain];
+            rbx = [[ShadowsocksRunner configForKey:@&quot;proxy ip&quot;] retain];
+            rax = [ShadowsocksRunner configForKey:@&quot;proxy port&quot;];
+            rax = [rax retain];
+            var_40 = rax;
+            stack[2048] = rax;
+            rcx = r15;
+            r12 = r13;
+            r15 = rbx;
+            rbx = [[NSString stringWithFormat:@&quot;%@:%@@%@:%@&quot;, rcx, r12, r15, stack[2048]] retain];
+            var_30 = rbx;
+            [var_40 release];
+            [r15 release];
+            [r12 release];
+            [var_38 release];
+            rdi = rbx;
+            r14 = [[rdi dataUsingEncoding:0x4] retain];
+            r15 = [[r14 base64Encoding] retain];
+            [r14 release];
+            r12 = [[NSString stringWithFormat:@&quot;ss://%@&quot;, r15] retain];
+            rbx = [[NSURL URLWithString:r12] retain];
+            [r12 release];
+            [r15 release];
+            [var_30 release];
+    }
+    rdi = rbx;
+    rax = [rdi autorelease];
+    return rax;
+}
+</code></pre><p>从代码中可以看出，该方法对账号的地址，端口，密码，加密方式进行拼接，然后Base64编码。</p>
+<h1 id="三-保存账号信息"><a href="#三-保存账号信息" class="headerlink" title="三. 保存账号信息"></a>三. 保存账号信息</h1><p>既然有了账号信息，剩下的就是将该信息存储，我们知道ShadowsocksX有个服务器设定页面，不难想象，该类里肯定有对账号进行增删改查的功能，用Interface Inspector(Mac下的UI查看工具，相当于iOS的Reveal)工具可知服务器设定页面属于SWBConfigWindowController类，在该类中，我们发现了-(void)OK:(id)arg1;，该方法是在我们修改信息后，点击确定所执行的方法，那我们支看看这里都做了什么。</p>
+<pre><code>void -[SWBConfigWindowController OK:](void * self, void * _cmd, void * arg2) {
+    rbx = self;
+    if ([self saveCurrentProfile] != 0x0) {
+            [rbx saveSettings];
+            r14 = [[rbx window] retain];
+            [r14 performClose:rbx];
+            rdi = r14;
+            [rdi release];
+    }
+    else {
+            rdi = rbx;
+            [rdi shakeWindow];
+    }
+    return;
+}
+</code></pre><p>该方法简单来说调用了两个重要方法saveCurrentProfile和saveSettings，saveCurrentProfile方法只是把当前修改的账号信息保存，这方法我们忽略，重点来看看saveSettings方法。</p>
+<pre><code>oid -[SWBConfigWindowController saveSettings](void * self, void * _cmd) {
+    rdx = self-&gt;configuration;
+    [ProfileManager saveConfiguration:rdx];
+    [ShadowsocksRunner reloadConfig];
+    rbx = [[self delegate] retain];
+    [rbx configurationDidChange];
+    rdi = rbx;
+    [rdi release];
+    return;
+}
+</code></pre><p>由代码可知，保存账号信息调用了[ProfileManager saveConfiguration:rdx];和[ShadowsocksRunner reloadConfig];那我们只要手动的调用这两方法就可以了。我的实现代码如下:</p>
+<pre><code>Profile *profile = [self initProfileWithURL:url]; // 账号的Model
+Configuration *configuration = [objc_getClass(&quot;ProfileManager&quot;) performSelector:@selector(configuration)];
+configuration.profiles = [@[profile] mutableCopy];
+configuration.current = 0;
+[objc_getClass(&quot;ProfileManager&quot;) saveConfiguration:configuration];
+[objc_getClass(&quot;ShadowsocksRunner&quot;) reloadConfig];
+</code></pre><p>由于该方法是异步，所以最后我们再调用下面方法刷新服务器列表</p>
+<pre><code>SWBAppDelegate *appDelegate = [NSApplication sharedApplication].delegate;
+[appDelegate valueForKey:@&quot;updateServersMenu&quot;];
+</code></pre><p><strong> In the end !</strong></p>
+<p><strong>原创文章如转载，请注明出处。</strong></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">关注我</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，关注我</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="http://ww2.sinaimg.cn/thumb300/006jCQiGgw1f7kphytuy7j308c08cabv.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="http://ww4.sinaimg.cn/thumb300/006jCQiGgw1f7kphz47d1j308c08cdho.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Hook-shadowsocketsx-in-mac" 
+      data-title="Mac下对ShadowsocksX进行Hook,实现自动更新账号" data-url="http://blog.witchan.com/2017/03/17/Hook-shadowsocketsx-in-mac/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"witchan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
