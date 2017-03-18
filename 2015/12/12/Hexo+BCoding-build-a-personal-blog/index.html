@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo + Coding 搭建个人博客 | iOS开发 - WitChan的技术博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="WitChan,ios博客,iOS开发,ios技术" />
+  
+
+  <meta name="description" content="最简单的教程教你使用hexo在coding上搭建个人博客
+一. 安装Node.jshttp://www.apple.com/cn/shop/browse/finance/installment二. 安装hexo三. 生成本地博客四. 配置coding.net五. 域名解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo + Coding 搭建个人博客">
+<meta property="og:url" content="http://blog.witchan.com/2015/12/12/Hexo+BCoding-build-a-personal-blog/index.html">
+<meta property="og:site_name" content="iOS开发 - WitChan的技术博客">
+<meta property="og:description" content="最简单的教程教你使用hexo在coding上搭建个人博客
+一. 安装Node.jshttp://www.apple.com/cn/shop/browse/finance/installment二. 安装hexo三. 生成本地博客四. 配置coding.net五. 域名解析">
+<meta property="og:updated_time" content="2017-03-18T02:28:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo + Coding 搭建个人博客">
+<meta name="twitter:description" content="最简单的教程教你使用hexo在coding上搭建个人博客
+一. 安装Node.jshttp://www.apple.com/cn/shop/browse/finance/installment二. 安装hexo三. 生成本地博客四. 配置coding.net五. 域名解析">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?d94f3dfe4e8798a0d3dfb935f6bbc4ff";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/project/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            项目
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一-安装Node-js"><span class="toc-text">一. 安装Node.js</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二-安装hexo"><span class="toc-text">二. 安装hexo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三-生成本地博客"><span class="toc-text">三. 生成本地博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四-配置coding-net"><span class="toc-text">四. 配置coding.net</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五-域名解析"><span class="toc-text">五. 域名解析</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Hexo+BCoding-build-a-personal-blog" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Hexo + Coding 搭建个人博客</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.12.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>WitChan</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+
+      
+        <i class="icon-comment"></i> 
+        <span class="ds-thread-count" data-thread-key="post-Hexo+BCoding-build-a-personal-blog"><i class="fa fa-spinner fa-spin"></i></span> 条评论
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>最简单的教程教你使用<strong>hexo</strong>在<strong>coding</strong>上搭建个人博客</p>
+<p>一. <strong>安装Node.js</strong><a href="http://www.apple.com/cn/shop/browse/finance/installment" target="_blank" rel="external">http://www.apple.com/cn/shop/browse/finance/installment</a><br>二. <strong>安装hexo</strong><br>三. <strong>生成本地博客</strong><br>四. <strong>配置<a href="https://coding.net/" target="_blank" rel="external">coding.net</a></strong><br>五. <strong>域名解析</strong></p>
+<a id="more"></a>
+<hr>
+<h1 id="一-安装Node-js"><a href="#一-安装Node-js" class="headerlink" title="一. 安装Node.js"></a>一. 安装Node.js</h1><p>因为hexo基于Node.js，所以在这要先安装Node.js。下载地址:<a href="https://nodejs.org/dist/v6.4.0/node-v6.4.0.pkg" target="_blank" rel="external">https://nodejs.org/dist/v6.4.0/node-v6.4.0.pkg</a></p>
+<h1 id="二-安装hexo"><a href="#二-安装hexo" class="headerlink" title="二. 安装hexo"></a>二. 安装hexo</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">终端输入:</div><div class="line">$ sudo npm install hexo-cli -g</div></pre></td></tr></table></figure>
+<h1 id="三-生成本地博客"><a href="#三-生成本地博客" class="headerlink" title="三. 生成本地博客"></a>三. 生成本地博客</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">终端输入:</div><div class="line">$ <span class="built_in">cd</span> Documents/myblog/				  	// 博客存放的路径</div><div class="line">$ hexo init                             // 创建博客</div><div class="line">$ npm install			 		        // 安装依赖包</div><div class="line">$ npm install hexo-deployer-git --save	// 安装git插件</div><div class="line">$ hexo g		 				 	    // 生成静态网站</div><div class="line">$ hexo s      						    // 启动本地预览</div></pre></td></tr></table></figure>
+<p>在浏览器输入<a href="http://0.0.0.0:4000/" target="_blank" rel="external">http://0.0.0.0:4000/</a>即可访问本地博客.如果要执行其他命令时,请先按<code>Ctrl+C</code> 结束本地访问博客. </p>
+<h1 id="四-配置coding-net"><a href="#四-配置coding-net" class="headerlink" title="四. 配置coding.net"></a>四. 配置coding.net</h1><ol>
+<li><a href="https://coding.net/register" target="_blank" rel="external">注册coding.net</a>并创建项目,项目名称和用户名保持一致.  </li>
+<li>打开与用户名同名的项目 -&gt; pages 服务 -&gt; 部署分支输入: <code>master</code> 并开启.  </li>
+<li><p>打开myblog文件夹下的_config.yml文件,并在最后一行添加以下代码并保存:  </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">	<span class="built_in">type</span>:git</div><div class="line">	repository:git@coding.net:用户名/用户名.git</div><div class="line">	branch:master</div></pre></td></tr></table></figure>
+</li>
+<li><p>上传网页到coding</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">终端输入:</div><div class="line">$ <span class="built_in">cd</span> Documents/myblog/</div><div class="line">$ hexo g</div><div class="line">$ hexo d</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在浏览器输入<a href="http://用户名.coding.me/用户名" target="_blank" rel="external">http://用户名.coding.me/用户名</a> 回车,就能看到一个hello 的页面了,至此,你的博客已经建立成功,如果你有自己的域名,那请看第五步 ↓↓↓</p>
+<h1 id="五-域名解析"><a href="#五-域名解析" class="headerlink" title="五. 域名解析"></a>五. 域名解析</h1><ol>
+<li>域名管理网站 -&gt; 域名管理 -&gt; 解析 -&gt; 添加三条解析</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">记录类型</th>
+<th style="text-align:left">主机记录</th>
+<th style="text-align:left">线路解析</th>
+<th style="text-align:left">记录值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">CNAME</td>
+<td style="text-align:left">blog</td>
+<td style="text-align:left">默认</td>
+<td style="text-align:left">用户名.coding.me</td>
+</tr>
+<tr>
+<td style="text-align:left">CNAME</td>
+<td style="text-align:left">www</td>
+<td style="text-align:left">默认</td>
+<td style="text-align:left">用户名.coding.me</td>
+</tr>
+<tr>
+<td style="text-align:left">CNAME</td>
+<td style="text-align:left">@</td>
+<td style="text-align:left">默认</td>
+<td style="text-align:left">用户名.coding.me</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>登录coding.net -&gt; 我的项目 -&gt; 打开与用户名同名的项目 -&gt; 项目设置 -&gt; pages 服务 -&gt; 添加自定义域名</li>
+</ol>
+<ul>
+<li>www.域名.com</li>
+<li>blog.域名.com</li>
+<li>域名.com</li>
+</ul>
+<p>至此,一个完整的博客就此诞生了,如你在创建过程中遇到什么问题的话,欢迎留言.</p>
+<p>原创文章如转载，请注明出处。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">关注我</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，关注我</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="http://ww2.sinaimg.cn/thumb300/006jCQiGgw1f7kphytuy7j308c08cabv.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="http://ww4.sinaimg.cn/thumb300/006jCQiGgw1f7kphz47d1j308c08cdho.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/project/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              项目
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Hexo+BCoding-build-a-personal-blog" 
+      data-title="Hexo + Coding 搭建个人博客" data-url="http://blog.witchan.com/2015/12/12/Hexo+BCoding-build-a-personal-blog/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"witchan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
